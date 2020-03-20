@@ -133,3 +133,4 @@ dmypy.json
 
 # Local test file
 test.py
+.pypirc
