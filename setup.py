@@ -4,15 +4,18 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="fortnox-python",
-    version="0.0.1",
+    name="pyfortnox",
+    version="0.0.2",
     author="Mahmudul Hasan",
     author_email="ikhtiarcse10ruet@gmail.com",
     description="A small package for Fortnox API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/xalien10/fortnox-python",
+    url="https://github.com/xalien10/pyfortnox",
     packages=setuptools.find_packages(),
+    include_package_data=True,
+    install_requires=["munch>=2.5.0", "requests>=2.21.0", "urllib3>=1.24.3"],
+    zip_safe=False,
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
