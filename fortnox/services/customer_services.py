@@ -27,7 +27,7 @@ class CustomerService(object):
         """
         Retrieve all customers
 
-        Returns all notes available to the user, according to the parameters provided
+        Returns all Customers available to the Company, according to the parameters provided
 
         :calls: ``get /customers``
         :param dict params: (optional) Search options.
@@ -42,11 +42,11 @@ class CustomerService(object):
         """
         Retrieve a single customer
 
-        Returns a single user according to the unique user ID provided
-        If the specified user does not exist, this query returns an error
+        Returns a single Customer according to the unique Customer ID provided
+        If the specified Customer does not exist, this query returns an error
 
         :calls: ``get /customers/{id}``
-        :param int id: Unique identifier of a User.
+        :param int id: Unique identifier of a Customer.
         :return: Dictionary that support attriubte-style access and represent User resource.
         :rtype: dict
         """
@@ -58,10 +58,10 @@ class CustomerService(object):
         Create a customer
 
         Creates a new customer
-        **Notice** the tag's name **must** be unique within the scope of the resource_type
+        **Notice** the customer's name **must** be unique within the scope of the resource_type
 
         :calls: ``post /customers``
-        :param tuple *args: (optional) Single object representing Tag resource.
+        :param tuple *args: (optional) Single object representing Customer resource.
         :param dict **kwargs: (optional) Customer attributes.
         :return: Dictionary that support attriubte-style access and represents newely created Customer resource.
         :rtype: dict
@@ -106,8 +106,8 @@ class CustomerService(object):
         Delete a customer
 
         Deletes an existing customer
-        If the specified tag is assigned to any resource, we will remove this customer from all such resources
-        If the specified tag does not exist, this query will return an error
+        If the specified customer is assigned to any resource, we will remove this customer from all such resources
+        If the specified customer does not exist, this query will return an error
         This operation cannot be undone
 
         :calls: ``delete /customers/{id}``
