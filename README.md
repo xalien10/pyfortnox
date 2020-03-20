@@ -1,2 +1,2 @@
-# django-fortnox
+# fortnox-python
 REST client for using Fortnox API
