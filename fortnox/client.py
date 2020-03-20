@@ -43,6 +43,7 @@ class Client(object):
         self.http_client = HttpClient(self.config)
 
         self.__customers = fortnox.services.CustomerService(self.http_client)
+        self.__company_settings = fortnox.services.CompanySettingsService(self.http_client)
 
     @property
     def customers(self):
@@ -51,3 +52,11 @@ class Client(object):
         :rtype: fortnox.CustomerService
         """
         return self.__customers
+
+    @property
+    def company_settings(self):
+        """
+        :return: :class:`CompanySettingsService <fortnox.CompanySettingsService>` object that gives you an access to CompanySettings related actions.
+        :rtype: fortnox.CompanySettingsService
+        """
+        return self.__company_settings
