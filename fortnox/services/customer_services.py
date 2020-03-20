@@ -1,7 +1,7 @@
 class CustomerService(object):
     """
     :class:`fortnox.CustomerService` is used by :class:`fortnox.Client` to make
-    actions related to Note resource.
+    actions related to Customer resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -9,7 +9,8 @@ class CustomerService(object):
     """
     Allowed attributes for Customer to send to Fortnox backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['content', 'resource_id', 'resource_type']
+    OPTS_KEYS_TO_PERSIST = ['Name']
+    SERVICE = "Customer"
 
     def __init__(self, http_client):
         """
@@ -36,3 +37,84 @@ class CustomerService(object):
 
         _, _, customers = self.http_client.get("/customers", params=params)
         return customers
+
+    def retrieve(self, id):
+        """
+        Retrieve a single customer
+
+        Returns a single user according to the unique user ID provided
+        If the specified user does not exist, this query returns an error
+
+        :calls: ``get /customers/{id}``
+        :param int id: Unique identifier of a User.
+        :return: Dictionary that support attriubte-style access and represent User resource.
+        :rtype: dict
+        """
+        _, _, customer = self.http_client.get("/customers/{id}".format(id=id))
+        return customer
+
+    def create(self, *args, **kwargs):
+        """
+        Create a customer
+
+        Creates a new customer
+        **Notice** the tag's name **must** be unique within the scope of the resource_type
+
+        :calls: ``post /customers``
+        :param tuple *args: (optional) Single object representing Tag resource.
+        :param dict **kwargs: (optional) Customer attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created Customer resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Customer are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
+        attributes.update({'service': self.SERVICE})
+        _, _, customer = self.http_client.post("/customers", body=attributes)
+        return customer
+
+    def update(self, id, *args, **kwargs):
+        """
+        Update a customer
+
+        Updates a customer's information
+        If the specified customer does not exist, this query will return an error
+        **Notice** if you want to update a customer, you **must** make sure the customer's name is unique within the scope of the specified resource
+
+        :calls: ``put /customers/{id}``
+        :param int id: Unique identifier of a Customer.
+        :param tuple *args: (optional) Single object representing Customer resource which attributes should be updated.
+        :param dict **kwargs: (optional) Customer attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Customer resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Customer are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.items())
+        attributes.update({'service': self.SERVICE})
+        _, _, customer = self.http_client.put("/customers/{id}".format(id=id), body=attributes)
+        return customer
+
+    def destroy(self, id):
+        """
+        Delete a customer
+
+        Deletes an existing customer
+        If the specified tag is assigned to any resource, we will remove this customer from all such resources
+        If the specified tag does not exist, this query will return an error
+        This operation cannot be undone
+
+        :calls: ``delete /customers/{id}``
+        :param int id: Unique identifier of a Customer.
+        :return: True if the operation succeeded.
+        :rtype: bool
+        """
+
+        status_code, _, _ = self.http_client.delete("/customers/{id}".format(id=id))
+        return status_code == 204

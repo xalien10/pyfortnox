@@ -26,7 +26,7 @@ class BaseError(Exception):
     * :class:`ServerError <ServerError>`
 
     :attribute int http_status: Http status code.
-    :attribute str logref: Request unique identifier.
+    :attribute str code: Request unique identifier.
     :attribute list errors: List of :class:`Munch <munch.Munch>` objects repsenting returned errors.
 
     Each error object has following attributes:
@@ -43,11 +43,21 @@ class BaseError(Exception):
         :param dict errors_payload: Json decoded payload from the errors response.
         """
         self.http_status = http_status
-        self.errors = [munchify(error_envelope['error'])
-                       for error_envelope in errors_payload['errors']]
-        self.logref = errors_payload['meta']['logref']
+        self.errors = munchify(errors_payload['ErrorInformation'])
 
-        message = "\n".join([str(error) for error in self.errors])
+        try:
+            error_code = self.errors.Code
+        except:
+            error_code = self.errors.code
+
+        self.code = error_code
+
+        try:
+            error_message = self.errors.Message
+        except:
+            error_message = self.errors.message
+
+        message = "\n".join([str(error_message)])
         super(BaseError, self).__init__(message)
 
 

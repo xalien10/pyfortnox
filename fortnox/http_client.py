@@ -132,9 +132,8 @@ class HttpClient(object):
         raw = bool(kwargs['raw']) if 'raw' in kwargs else False
 
         if body is not None:
-            payload = body if raw else self.wrap_envelope(body)
+            # payload = body if raw else self.wrap_envelope(body)
             body = json.dumps(self.wrap_envelope(body), cls=DecimalEncoder)
-
         resp = requests.request(method, url,
                                 params=params,
                                 data=body,
@@ -172,12 +171,16 @@ class HttpClient(object):
 
     @staticmethod
     def wrap_envelope(body):
-        return {'data': body}
+        key = 'data'
+        if 'service' in body.keys():
+            key = body.get('service')
+            body.pop('service')
+        return {key: body}
 
     @staticmethod
     def unwrap_envelope(body):
         keys = [key for key in body.keys()]
-        return [munchify(item) for item in body.get(keys[1])]
+        return [munchify(item) for item in body.get(keys[1])] if len(keys) > 1 else munchify(body.get(keys[0]))
 
     def enable_logging(self):
         import logging
