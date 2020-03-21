@@ -10,7 +10,7 @@ class AccountChartsService(object):
     Allowed attributes for AccountCharts to send to Fortnox backend servers.
     """
     OPTS_KEYS_TO_PERSIST = []
-    SERVICE = "AccountCharts"
+    SERVICE = "AccountChart"
 
     def __init__(self, http_client):
         """

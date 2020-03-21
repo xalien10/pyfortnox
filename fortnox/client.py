@@ -45,6 +45,7 @@ class Client(object):
         self.__customers = fortnox.services.CustomerService(self.http_client)
         self.__company_settings = fortnox.services.CompanySettingsService(self.http_client)
         self.__account_charts = fortnox.services.AccountChartsService(self.http_client)
+        self.__accounts = fortnox.services.AccountsService(self.http_client)
 
     @property
     def customers(self):
@@ -69,3 +70,11 @@ class Client(object):
         :rtype: fortnox.AccountChartsService
         """
         return self.__account_charts
+
+    @property
+    def accounts(self):
+        """
+        :return: :class:`AccountsService <fortnox.AccountsService>` object that gives you an access to AccountsService related actions.
+        :rtype: fortnox.AccountsService
+        """
+        return self.__accounts
