@@ -1,5 +1,5 @@
 # pyfortnox
-REST client for using Fortnox API
+python client for using Fortnox API
 
 ## Install package
 `pip install pyfortnox`
