@@ -49,6 +49,7 @@ class Client(object):
         self.__absence_transactions = fortnox.services.AbsenceTransactionsService(self.http_client)
         self.__currencies = fortnox.services.CurrencyService(self.http_client)
         self.__company_information = fortnox.services.CompanyInformationService(self.http_client)
+        self.__employees = fortnox.services.EmployeeService(self.http_client)
 
     @property
     def customers(self):
@@ -105,3 +106,11 @@ class Client(object):
         :rtype: fortnox.CompanyInformationService
         """
         return self.__company_information
+
+    @property
+    def employees(self):
+        """
+        :return: :class:`EmployeeService <fortnox.EmployeeService>` object that gives you an access to Employees related actions.
+        :rtype: fortnox.EmployeeService
+        """
+        return self.__employees

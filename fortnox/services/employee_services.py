@@ -1,16 +1,16 @@
-class Service(object):
+class EmployeeService(object):
     """
-    :class:`fortnox.<specific-service>` is used by :class:`fortnox.Client` to make
-    actions related to <specific-service> resource.
+    :class:`fortnox.EmployeeService` is used by :class:`fortnox.Client` to make
+    actions related to Employee resource.
 
     Normally you won't instantiate this class directly.
     """
 
     """
-    Allowed attributes for <specific-service> to send to Fortnox backend servers.
+    Allowed attributes for Employee to send to Fortnox backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['Name']
-    SERVICE = "<specific-service>"
+    OPTS_KEYS_TO_PERSIST = ['EmployeeId', 'FirstName', 'LastName']
+    SERVICE = "Employee"
 
     def __init__(self, http_client):
         """
@@ -25,96 +25,78 @@ class Service(object):
 
     def list(self, **params):
         """
-        Retrieve all <specific-service>
+        Retrieve all Employees
 
-        Returns all <specific-service> available to the Company, according to the parameters provided
+        Returns all Employees available to the Company, according to the parameters provided
 
-        :calls: ``get /<specific-service>``
+        :calls: ``get /employees``
         :param dict params: (optional) Search options.
-        :return: List of dictionaries that support attriubte-style access, which represent collection of Customers.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of Employees.
         :rtype: list
         """
 
-        _, _, customers = self.http_client.get("/<specific-service>", params=params)
-        return customers
-
-    def retrieve(self, id):
-        """
-        Retrieve a single <specific-service>
-
-        Returns a single <specific-service> according to the unique <specific-service> ID provided
-        If the specified <specific-service> does not exist, this query returns an error
-
-        :calls: ``get /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :return: Dictionary that support attriubte-style access and represent <specific-service> resource.
-        :rtype: dict
-        """
-        _, _, customer = self.http_client.get("/<specific-service>/{id}".format(id=id))
-        return customer
+        _, _, employees = self.http_client.get("/employees", params=params)
+        return employees
 
     def create(self, *args, **kwargs):
         """
-        Create a <specific-service>
+        Create a Employee
 
-        Creates a new customer
-        **Notice** the customer's name **must** be unique within the scope of the resource_type
+        Creates a new Employee
+        **Notice** the Employee's name **must** be unique within the scope of the resource_type
 
         :calls: ``post /customers``
-        :param tuple *args: (optional) Single object representing <specific-service> resource.
-        :param dict **kwargs: (optional) Customer attributes.
-        :return: Dictionary that support attriubte-style access and represents newely created Customer resource.
+        :param tuple *args: (optional) Single object representing Employee resource.
+        :param dict **kwargs: (optional) Employee attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created Employee resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for Employee are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.post("/<specific-service>", body=attributes)
-        return customer
+        _, _, employee = self.http_client.post("/employees", body=attributes)
+        return employee
+
+    def retrieve(self, id):
+        """
+        Retrieve a single Employee
+
+        Returns a single Employee according to the unique Employee ID provided
+        If the specified Employee does not exist, this query returns an error
+
+        :calls: ``get /employees/{id}``
+        :param int id: Unique identifier of a employee.
+        :return: Dictionary that support attriubte-style access and represent employee resource.
+        :rtype: dict
+        """
+        _, _, employee = self.http_client.get("/employees/{id}".format(id=id))
+        return employee
 
     def update(self, id, *args, **kwargs):
         """
-        Update a <specific-service>
+        Update an Employee
 
-        Updates a <specific-service>'s information
-        If the specified <specific-service> does not exist, this query will return an error
-        **Notice** if you want to update a <specific-service>, you **must** make sure the <specific-service>'s name is unique within the scope of the specified resource
+        Updates an Employee's information
+        If the specified Employee does not exist, this query will return an error
+        **Notice** if you want to update an Employee, you **must** make sure the Employee's name is unique within the scope of the specified resource
 
-        :calls: ``put /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :param tuple *args: (optional) Single object representing <specific-service> resource which attributes should be updated.
-        :param dict **kwargs: (optional) <specific-service> attributes to update.
-        :return: Dictionary that support attriubte-style access and represents updated <specific-service> resource.
+        :calls: ``put /employees/{id}``
+        :param int id: Unique identifier of a employee.
+        :param tuple *args: (optional) Single object representing employee resource which attributes should be updated.
+        :param dict **kwargs: (optional) employee attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated employee resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for Employee are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items())
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.put("/customers/{id}".format(id=id), body=attributes)
-        return customer
-
-    def destroy(self, id):
-        """
-        Delete a <specific-service>
-
-        Deletes an existing <specific-service>
-        If the specified <specific-service> is assigned to any resource, we will remove this <specific-service> from all such resources
-        If the specified <specific-service> does not exist, this query will return an error
-        This operation cannot be undone
-
-        :calls: ``delete /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :return: True if the operation succeeded.
-        :rtype: bool
-        """
-
-        status_code, _, _ = self.http_client.delete("/<specific-service>/{id}".format(id=id))
-        return status_code == 204
+        _, _, employee = self.http_client.put("/employees/{id}".format(id=id), body=attributes)
+        return employee
