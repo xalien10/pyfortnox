@@ -4,3 +4,4 @@ from .account_chart_services import AccountChartsService
 from .account_services import AccountsService
 from .absence_transaction_services import AbsenceTransactionsService
 from .currency_services import CurrencyService
+from .company_information_services import CompanyInformationService
