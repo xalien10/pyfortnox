@@ -6,3 +6,4 @@ from .absence_transaction_services import AbsenceTransactionsService
 from .currency_services import CurrencyService
 from .company_information_services import CompanyInformationService
 from .employee_services import EmployeeService
+from .project_services import ProjectService
