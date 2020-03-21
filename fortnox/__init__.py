@@ -11,6 +11,7 @@ from fortnox.configuration import Configuration
 from fortnox.http_client import HttpClient
 
 from fortnox.services import (
-    CustomerService, CompanySettingsService,
+    CustomerService, CompanySettingsService, AccountChartsService, AccountsService,
+    AbsenceTransactionsService, CurrencyService, CompanyInformationService,
 )
 from fortnox.client import Client
