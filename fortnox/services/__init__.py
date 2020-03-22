@@ -8,3 +8,4 @@ from .company_information_services import CompanyInformationService
 from .employee_services import EmployeeService
 from .project_services import ProjectService
 from .article_services import ArticleService
+from .expense_services import ExpenseService
