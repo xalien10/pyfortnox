@@ -13,6 +13,6 @@ from fortnox.http_client import HttpClient
 from fortnox.services import (
     CustomerService, CompanySettingsService, AccountChartsService, AccountsService,
     AbsenceTransactionsService, CurrencyService, CompanyInformationService,
-    EmployeeService, ProjectService, ArticleService,
+    EmployeeService, ProjectService, ArticleService, ExpenseService,
 )
 from fortnox.client import Client
