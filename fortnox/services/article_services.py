@@ -1,16 +1,16 @@
-class Service(object):
+class ArticleService(object):
     """
-    :class:`fortnox.<specific-service>` is used by :class:`fortnox.Client` to make
-    actions related to <specific-service> resource.
+    :class:`fortnox.ArticleService` is used by :class:`fortnox.Client` to make
+    actions related to Articles resource.
 
     Normally you won't instantiate this class directly.
     """
 
     """
-    Allowed attributes for <specific-service> to send to Fortnox backend servers.
+    Allowed attributes for Articles to send to Fortnox backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['Name']
-    SERVICE = "<specific-service>"
+    OPTS_KEYS_TO_PERSIST = ['ArticleNumber', 'Description']
+    SERVICE = "Article"
 
     def __init__(self, http_client):
         """
@@ -25,96 +25,96 @@ class Service(object):
 
     def list(self, **params):
         """
-        Retrieve all <specific-service>
+        Retrieve all Articles
 
-        Returns all <specific-service> available to the Company, according to the parameters provided
+        Returns all Articles available to the Company, according to the parameters provided
 
-        :calls: ``get /<specific-service>``
+        :calls: ``get /articles``
         :param dict params: (optional) Search options.
-        :return: List of dictionaries that support attriubte-style access, which represent collection of Customers.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of Articles.
         :rtype: list
         """
 
-        _, _, customers = self.http_client.get("/<specific-service>", params=params)
-        return customers
+        _, _, articles = self.http_client.get("/articles", params=params)
+        return articles
 
-    def retrieve(self, id):
+    def retrieve(self, number):
         """
-        Retrieve a single <specific-service>
+        Retrieve a single Article
 
-        Returns a single <specific-service> according to the unique <specific-service> ID provided
-        If the specified <specific-service> does not exist, this query returns an error
+        Returns a single Article according to the unique Article ID provided
+        If the specified Article does not exist, this query returns an error
 
-        :calls: ``get /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :return: Dictionary that support attriubte-style access and represent <specific-service> resource.
+        :calls: ``get /articles/{number}``
+        :param int id: Unique identifier of an Article.
+        :return: Dictionary that support attriubte-style access and represent Article resource.
         :rtype: dict
         """
-        _, _, customer = self.http_client.get("/<specific-service>/{id}".format(id=id))
-        return customer
+        _, _, article = self.http_client.get("/articles/{number}".format(number=number))
+        return article
 
     def create(self, *args, **kwargs):
         """
-        Create a <specific-service>
+        Create an Article
 
-        Creates a new customer
-        **Notice** the customer's name **must** be unique within the scope of the resource_type
+        Creates a new Article
+        **Notice** the Article's name **must** be unique within the scope of the resource_type
 
-        :calls: ``post /customers``
-        :param tuple *args: (optional) Single object representing <specific-service> resource.
-        :param dict **kwargs: (optional) Customer attributes.
-        :return: Dictionary that support attriubte-style access and represents newely created Customer resource.
+        :calls: ``post /articles``
+        :param tuple *args: (optional) Single object representing Article resource.
+        :param dict **kwargs: (optional) Article attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created Articles resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for Article are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.post("/<specific-service>", body=attributes)
-        return customer
+        _, _, article = self.http_client.post("/articles", body=attributes)
+        return article
 
-    def update(self, id, *args, **kwargs):
+    def update(self, number, *args, **kwargs):
         """
-        Update a <specific-service>
+        Update an Article
 
-        Updates a <specific-service>'s information
-        If the specified <specific-service> does not exist, this query will return an error
-        **Notice** if you want to update a <specific-service>, you **must** make sure the <specific-service>'s name is unique within the scope of the specified resource
+        Updates an Article's information
+        If the specified Article does not exist, this query will return an error
+        **Notice** if you want to update an Article, you **must** make sure the Article's name is unique within the scope of the specified resource
 
-        :calls: ``put /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :param tuple *args: (optional) Single object representing <specific-service> resource which attributes should be updated.
-        :param dict **kwargs: (optional) <specific-service> attributes to update.
-        :return: Dictionary that support attriubte-style access and represents updated <specific-service> resource.
+        :calls: ``put /articles/{number}``
+        :param int id: Unique identifier of an Article.
+        :param tuple *args: (optional) Single object representing Article resource which attributes should be updated.
+        :param dict **kwargs: (optional) Article attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Article resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for Article are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items())
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.put("/customers/{id}".format(id=id), body=attributes)
-        return customer
+        _, _, article = self.http_client.put("/articles/{number}".format(number=number), body=attributes)
+        return article
 
-    def destroy(self, id):
+    def destroy(self, number):
         """
-        Delete a <specific-service>
+        Delete an Article
 
-        Deletes an existing <specific-service>
-        If the specified <specific-service> is assigned to any resource, we will remove this <specific-service> from all such resources
-        If the specified <specific-service> does not exist, this query will return an error
+        Deletes an existing Article
+        If the specified Article is assigned to any resource, we will remove this Article from all such resources
+        If the specified Article does not exist, this query will return an error
         This operation cannot be undone
 
-        :calls: ``delete /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
+        :calls: ``delete /articles/{number}``
+        :param int id: Unique identifier of an Article.
         :return: True if the operation succeeded.
         :rtype: bool
         """
 
-        status_code, _, _ = self.http_client.delete("/<specific-service>/{id}".format(id=id))
+        status_code, _, _ = self.http_client.delete("/articles/{number}".format(number=number))
         return status_code == 204

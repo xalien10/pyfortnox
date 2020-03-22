@@ -51,6 +51,7 @@ class Client(object):
         self.__company_information = fortnox.services.CompanyInformationService(self.http_client)
         self.__employees = fortnox.services.EmployeeService(self.http_client)
         self.__projects = fortnox.services.ProjectService(self.http_client)
+        self.__articles = fortnox.services.ArticleService(self.http_client)
 
     @property
     def customers(self):
@@ -123,3 +124,11 @@ class Client(object):
         :rtype: fortnox.ProjectService
         """
         return self.__projects
+
+    @property
+    def articles(self):
+        """
+        :return: :class:`ArticleService <fortnox.ArticleService>` object that gives you an access to Articles related actions.
+        :rtype: fortnox.ArticleService
+        """
+        return self.__articles

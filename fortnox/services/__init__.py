@@ -7,3 +7,4 @@ from .currency_services import CurrencyService
 from .company_information_services import CompanyInformationService
 from .employee_services import EmployeeService
 from .project_services import ProjectService
+from .article_services import ArticleService
