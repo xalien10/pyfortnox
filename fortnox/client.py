@@ -57,6 +57,7 @@ class Client(object):
         self.__invoices = fortnox.services.InvoiceService(self.http_client)
         self.__asset_types = fortnox.services.AssetTypeService(self.http_client)
         self.__predefined_accounts = fortnox.services.PredefinedAccountService(self.http_client)
+        self.__predefined_voucher_series = fortnox.services.PredefinedVoucherSeriesService(self.http_client)
 
     @property
     def customers(self):
@@ -177,3 +178,11 @@ class Client(object):
         :rtype: fortnox.PredefinedAccountService
         """
         return self.__predefined_accounts
+
+    @property
+    def predefined_voucher_series(self):
+        """
+        :return: :class:`PredefinedVoucherSeriesService <fortnox.PredefinedVoucherSeriesService>` object that gives you an access to Predefined Voucher Series related actions.
+        :rtype: fortnox.PredefinedVoucherSeriesService
+        """
+        return self.__predefined_voucher_series

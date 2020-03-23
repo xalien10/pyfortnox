@@ -10,6 +10,7 @@ from fortnox.services import (
     AbsenceTransactionsService, CurrencyService, CompanyInformationService, ProjectService,
     CustomerService, CompanySettingsService, AccountChartsService, AccountsService,
     FinancialYearService, InvoiceService, AssetTypeService, PredefinedAccountService,
-    EmployeeService, ArticleService, ExpenseService,
+    EmployeeService, ArticleService, ExpenseService, PredefinedVoucherSeriesService,
+
 )
 from fortnox.client import Client
