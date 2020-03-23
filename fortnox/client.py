@@ -54,6 +54,7 @@ class Client(object):
         self.__articles = fortnox.services.ArticleService(self.http_client)
         self.__expenses = fortnox.services.ExpenseService(self.http_client)
         self.__financial_years = fortnox.services.FinancialYearService(self.http_client)
+        self.__invoices = fortnox.services.InvoiceService(self.http_client)
 
     @property
     def customers(self):
@@ -150,3 +151,11 @@ class Client(object):
         :rtype: fortnox.FinancialYearService
         """
         return self.__financial_years
+
+    @property
+    def invoices(self):
+        """
+        :return: :class:`InvoiceService <fortnox.InvoiceService>` object that gives you an access to Invoice related actions.
+        :rtype: fortnox.InvoiceService
+        """
+        return self.__invoices
