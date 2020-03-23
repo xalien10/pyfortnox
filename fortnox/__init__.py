@@ -1,10 +1,6 @@
 from fortnox.errors import (
-    ConfigurationError,
-    RateLimitError,
-    BaseError,
-    RequestError,
-    ResourceError,
-    ServerError
+    ConfigurationError, RateLimitError, BaseError,
+    RequestError, ResourceError, ServerError
 )
 
 from fortnox.configuration import Configuration
@@ -14,6 +10,6 @@ from fortnox.services import (
     CustomerService, CompanySettingsService, AccountChartsService, AccountsService,
     AbsenceTransactionsService, CurrencyService, CompanyInformationService,
     EmployeeService, ProjectService, ArticleService, ExpenseService,
-    FinancialYearService, InvoiceService,
+    FinancialYearService, InvoiceService, AssetTypeService
 )
 from fortnox.client import Client
