@@ -1,16 +1,17 @@
-class Service(object):
+class AssetService(object):
     """
-    :class:`fortnox.<specific-service>` is used by :class:`fortnox.Client` to make
-    actions related to <specific-service> resource.
+    :class:`fortnox.AssetService` is used by :class:`fortnox.Client` to make
+    actions related to Assets resource.
 
     Normally you won't instantiate this class directly.
     """
 
     """
-    Allowed attributes for <specific-service> to send to Fortnox backend servers.
+    Allowed attributes for Asset to send to Fortnox backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['Name']
-    SERVICE = "<specific-service>"
+    OPTS_KEYS_TO_PERSIST = ['Number', 'Description', 'TypeId', 'AcquisitionDate',
+                            'AcquisitionStart', 'DepreciationFinal', 'AcquisitionValue']
+    SERVICE = "Asset"
 
     def __init__(self, http_client):
         """
@@ -25,96 +26,237 @@ class Service(object):
 
     def list(self, **params):
         """
-        Retrieve all <specific-service>
+        Retrieve all Assets
 
-        Returns all <specific-service> available to the Company, according to the parameters provided
+        Returns all Assets available to the Company, according to the parameters provided
 
-        :calls: ``get /<specific-service>``
+        :calls: ``get /assets``
         :param dict params: (optional) Search options.
-        :return: List of dictionaries that support attriubte-style access, which represent collection of Customers.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of Assets.
         :rtype: list
         """
 
-        _, _, customers = self.http_client.get("/<specific-service>", params=params)
-        return customers
+        _, _, assets = self.http_client.get("/assets", params=params)
+        return assets
+
+    def depreciation_list(self, to_date, **params):
+        """
+        Retrieve all deprecated assets
+
+        Returns all deprecated assets available to the Company, according to the parameters provided
+
+        :calls: ``get /assets/depreciations/{to_date}``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of deprecated assets.
+        :rtype: list
+        """
+
+        _, _, deprecated_assets = self.http_client.get("/assets/depreciations/{to_date}".format(to_date=to_date),
+                                                       params=params)
+        return deprecated_assets[1:]
 
     def retrieve(self, id):
         """
-        Retrieve a single <specific-service>
+        Retrieve a single Asset
 
-        Returns a single <specific-service> according to the unique <specific-service> ID provided
-        If the specified <specific-service> does not exist, this query returns an error
+        Returns a single Assets according to the unique Assets ID provided
+        If the specified Asset does not exist, this query returns an error
 
-        :calls: ``get /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :return: Dictionary that support attriubte-style access and represent <specific-service> resource.
+        :calls: ``get /assets/{id}``
+        :param int id: Unique identifier of an Asset.
+        :return: Dictionary that support attriubte-style access and represent Asset resource.
         :rtype: dict
         """
-        _, _, customer = self.http_client.get("/<specific-service>/{id}".format(id=id))
-        return customer
+        _, _, asset = self.http_client.get("/assets/{id}".format(id=id))
+        return asset
 
     def create(self, *args, **kwargs):
         """
-        Create a <specific-service>
+        Create an Asset
 
-        Creates a new customer
-        **Notice** the customer's name **must** be unique within the scope of the resource_type
+        Creates an new Asset
+        **Notice** the Asset's name **must** be unique within the scope of the resource_type
 
-        :calls: ``post /customers``
-        :param tuple *args: (optional) Single object representing <specific-service> resource.
-        :param dict **kwargs: (optional) Customer attributes.
-        :return: Dictionary that support attriubte-style access and represents newely created Customer resource.
+        :calls: ``post /assets``
+        :param tuple *args: (optional) Single object representing Asset resource.
+        :param dict **kwargs: (optional) Asset attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created Asset resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for Asset are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.post("/<specific-service>", body=attributes)
-        return customer
+        _, _, asset = self.http_client.post("/assets", body=attributes)
+        return asset
 
     def update(self, id, *args, **kwargs):
         """
-        Update a <specific-service>
+        Update an Asset
 
-        Updates a <specific-service>'s information
-        If the specified <specific-service> does not exist, this query will return an error
-        **Notice** if you want to update a <specific-service>, you **must** make sure the <specific-service>'s name is unique within the scope of the specified resource
+        Updates an Asset's information
+        If the specified Asset does not exist, this query will return an error
+        **Notice** if you want to update an Asset, you **must** make sure the Asset's name is unique within the scope of the specified resource
 
-        :calls: ``put /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :param tuple *args: (optional) Single object representing <specific-service> resource which attributes should be updated.
-        :param dict **kwargs: (optional) <specific-service> attributes to update.
-        :return: Dictionary that support attriubte-style access and represents updated <specific-service> resource.
+        :calls: ``put /assets/{id}``
+        :param int id: Unique identifier of an Asset.
+        :param tuple *args: (optional) Single object representing Asset resource which attributes should be updated.
+        :param dict **kwargs: (optional) Asset attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Asset resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for Asset are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items())
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.put("/customers/{id}".format(id=id), body=attributes)
-        return customer
+        _, _, asset = self.http_client.put("/assets/{id}".format(id=id), body=attributes)
+        return asset
 
     def destroy(self, id):
         """
-        Delete a <specific-service>
+        Delete an Asset
 
-        Deletes an existing <specific-service>
-        If the specified <specific-service> is assigned to any resource, we will remove this <specific-service> from all such resources
-        If the specified <specific-service> does not exist, this query will return an error
+        Deletes an existing Asset
+        If the specified Asset is assigned to any resource, we will remove this Asset from all such resources
+        If the specified Asset does not exist, this query will return an error
         This operation cannot be undone
 
-        :calls: ``delete /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
+        :calls: ``delete /assets/{id}``
+        :param int id: Unique identifier of an Asset.
         :return: True if the operation succeeded.
         :rtype: bool
         """
 
-        status_code, _, _ = self.http_client.delete("/<specific-service>/{id}".format(id=id))
-        return status_code == 204
+        status_code, _, _ = self.http_client.delete("/assets/{id}".format(id=id))
+        return status_code == 200
+
+    def depreciate(self, *args, **kwargs):
+        """
+        Depreciate Assets
+
+        Updates an Asset's information
+        If the specified Asset does not exist, this query will return an error
+        **Notice** if you want to update an Asset, you **must** make sure the Asset's name is unique within the scope of the specified resource
+
+        :calls: ``put /assets/depreciate``
+        :param int id: Unique identifier of an Asset.
+        :param tuple *args: (optional) Single object representing Asset resource which attributes should be updated.
+        :param dict **kwargs: (optional) Asset attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Asset resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Asset are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.items())
+        attributes.update({'service': self.SERVICE})
+        _, _, asset = self.http_client.post("/assets/depreciate", body=attributes)
+        return asset
+
+    def write_up(self, id, *args, **kwargs):
+        """
+        Update an Asset
+
+        Asset's Write Up information
+        If the specified Asset does not exist, this query will return an error
+        **Notice** if you want to update an Asset, you **must** make sure the Asset's name is unique within the scope of the specified resource
+
+        :calls: ``put /assets/writeup/{id}``
+        :param int id: Unique identifier of an Asset.
+        :param tuple *args: (optional) Single object representing Asset resource which attributes should be updated.
+        :param dict **kwargs: (optional) Asset attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Asset resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Asset Write Up are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.items())
+        attributes.update({'service': self.SERVICE})
+        _, _, asset = self.http_client.put("/assets/writeup/{id}".format(id=id), body=attributes)
+        return asset
+
+    def write_down(self, id, *args, **kwargs):
+        """
+        Write Down an Asset
+
+        Updates an Asset's information
+        If the specified Asset does not exist, this query will return an error
+        **Notice** if you want to update an Asset, you **must** make sure the Asset's name is unique within the scope of the specified resource
+
+        :calls: ``put /assets/writedown/{id}``
+        :param int id: Unique identifier of an Asset.
+        :param tuple *args: (optional) Single object representing Asset resource which attributes should be updated.
+        :param dict **kwargs: (optional) Asset attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Asset resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Asset Write Down are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.items())
+        attributes.update({'service': self.SERVICE})
+        _, _, asset = self.http_client.put("/assets/writedown/{id}".format(id=id), body=attributes)
+        return asset
+
+    def scrap(self, id, *args, **kwargs):
+        """
+        Scrap Down an Asset
+
+        Updates an Asset's information
+        If the specified Asset does not exist, this query will return an error
+        **Notice** if you want to update an Asset, you **must** make sure the Asset's name is unique within the scope of the specified resource
+
+        :calls: ``put /assets/scrap/{id}``
+        :param int id: Unique identifier of an Asset.
+        :param tuple *args: (optional) Single object representing Asset resource which attributes should be updated.
+        :param dict **kwargs: (optional) Asset attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Asset resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Asset Scrap are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.items())
+        attributes.update({'service': self.SERVICE})
+        _, _, asset = self.http_client.put("/assets/scrap/{id}".format(id=id), body=attributes)
+        return asset
+
+    def sell(self, id, *args, **kwargs):
+        """
+        Sell an Asset
+
+        An Asset's sell information
+        If the specified Asset does not exist, this query will return an error
+        **Notice** if you want to update an Asset, you **must** make sure the Asset's name is unique within the scope of the specified resource
+
+        :calls: ``put /assets/sell/{id}``
+        :param int id: Unique identifier of an Asset.
+        :param tuple *args: (optional) Single object representing Asset resource which attributes should be updated.
+        :param dict **kwargs: (optional) Asset attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Asset resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Asset are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.items())
+        attributes.update({'service': self.SERVICE})
+        _, _, asset = self.http_client.put("/assets/sell/{id}".format(id=id), body=attributes)
+        return asset
