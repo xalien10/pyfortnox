@@ -14,5 +14,6 @@ from fortnox.services import (
     CustomerService, CompanySettingsService, AccountChartsService, AccountsService,
     AbsenceTransactionsService, CurrencyService, CompanyInformationService,
     EmployeeService, ProjectService, ArticleService, ExpenseService,
+    FinancialYearService
 )
 from fortnox.client import Client
