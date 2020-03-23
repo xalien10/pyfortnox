@@ -13,3 +13,5 @@ from .financial_year_services import FinancialYearService
 from .invoice_services import InvoiceService
 from .asset_type_services import AssetTypeService
 from .predefined_account_services import PredefinedAccountService
+from .predefined_voucher_series_services import PredefinedVoucherSeriesService
+from .asset_services import AssetService
