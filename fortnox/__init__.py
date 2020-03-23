@@ -7,9 +7,9 @@ from fortnox.configuration import Configuration
 from fortnox.http_client import HttpClient
 
 from fortnox.services import (
+    AbsenceTransactionsService, CurrencyService, CompanyInformationService, ProjectService,
     CustomerService, CompanySettingsService, AccountChartsService, AccountsService,
-    AbsenceTransactionsService, CurrencyService, CompanyInformationService,
-    EmployeeService, ProjectService, ArticleService, ExpenseService,
-    FinancialYearService, InvoiceService, AssetTypeService
+    FinancialYearService, InvoiceService, AssetTypeService, PredefinedAccountService,
+    EmployeeService, ArticleService, ExpenseService,
 )
 from fortnox.client import Client
