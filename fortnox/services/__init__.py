@@ -12,3 +12,4 @@ from .expense_services import ExpenseService
 from .financial_year_services import FinancialYearService
 from .invoice_services import InvoiceService
 from .asset_type_services import AssetTypeService
+from .predefined_account_services import PredefinedAccountService

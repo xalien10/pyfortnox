@@ -56,6 +56,7 @@ class Client(object):
         self.__financial_years = fortnox.services.FinancialYearService(self.http_client)
         self.__invoices = fortnox.services.InvoiceService(self.http_client)
         self.__asset_types = fortnox.services.AssetTypeService(self.http_client)
+        self.__predefined_accounts = fortnox.services.PredefinedAccountService(self.http_client)
 
     @property
     def customers(self):
@@ -168,3 +169,11 @@ class Client(object):
         :rtype: fortnox.AssetTypeService
         """
         return self.__asset_types
+
+    @property
+    def predefined_accounts(self):
+        """
+        :return: :class:`PredefinedAccountService <fortnox.PredefinedAccountService>` object that gives you an access to Predefined Accounts related actions.
+        :rtype: fortnox.PredefinedAccountService
+        """
+        return self.__predefined_accounts
