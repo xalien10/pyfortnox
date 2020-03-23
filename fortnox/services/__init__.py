@@ -10,3 +10,4 @@ from .project_services import ProjectService
 from .article_services import ArticleService
 from .expense_services import ExpenseService
 from .financial_year_services import FinancialYearService
+from .invoice_services import InvoiceService
