@@ -179,6 +179,9 @@ class HttpClient(object):
 
     @staticmethod
     def unwrap_envelope(body):
+        if body is '' or body is None:
+            # Sometimes response body returns nothing from Fortnox API
+            return True
         keys = [key for key in body.keys()]
         return [munchify(item) for item in body.get(keys[1])] if len(keys) > 1 else munchify(body.get(keys[0]))
 
