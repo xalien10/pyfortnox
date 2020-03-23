@@ -58,6 +58,7 @@ class Client(object):
         self.__asset_types = fortnox.services.AssetTypeService(self.http_client)
         self.__predefined_accounts = fortnox.services.PredefinedAccountService(self.http_client)
         self.__predefined_voucher_series = fortnox.services.PredefinedVoucherSeriesService(self.http_client)
+        self.__assets = fortnox.services.AssetService(self.http_client)
 
     @property
     def customers(self):
@@ -186,3 +187,11 @@ class Client(object):
         :rtype: fortnox.PredefinedVoucherSeriesService
         """
         return self.__predefined_voucher_series
+
+    @property
+    def assets(self):
+        """
+        :return: :class:`AssetService <fortnox.AssetService>` object that gives you an access to Asset related actions.
+        :rtype: fortnox.AssetService
+        """
+        return self.__assets
