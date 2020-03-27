@@ -116,12 +116,29 @@ class HttpClient(object):
         url = "{base_url}{version}{resource}".format(base_url=self.config.base_url,
                                                      version=self.API_VERSION,
                                                      resource=url)
-        headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Token': "{access_token}".format(access_token=self.config.access_token),
-            'Client-Secret': "{client_secret}".format(client_secret=self.config.client_secret)
-        }
+
+        need_to_obtain_access_token = False
+        try:
+            if 'service' in params.keys():
+                key = params.get('service')
+                if key == "AccessToken":
+                    need_to_obtain_access_token = True
+                    params.pop('service')
+        except:
+            pass
+
+        if not need_to_obtain_access_token:
+            headers = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Token': "{access_token}".format(access_token=self.config.access_token),
+                'Client-Secret': "{client_secret}".format(client_secret=self.config.client_secret)
+            }
+        else:
+            headers = {
+                'Authorization-Code': "{authorization_code}".format(authorization_code=self.config.authorization_code),
+                'Client-Secret': "{client_secret}".format(client_secret=self.config.client_secret)
+            }
 
         user_headers = {}
         if 'headers' in kwargs and isinstance(kwargs['headers'], dict):
