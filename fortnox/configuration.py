@@ -20,6 +20,8 @@ class Configuration(object):
         """
 
         self.access_token = options.get('access_token')
+        if self.access_token is None:
+            self.authorization_code = options.get('authorization_code')
         self.client_secret = options.get('client_secret')
         self.base_url = options['base_url'] if 'base_url' in options else 'https://api.fortnox.se'
         self.timeout = options['timeout'] if 'timeout' in options else 30
@@ -33,10 +35,26 @@ class Configuration(object):
         :raises ConfigurationError: if provided ``access_token`` is invalid - has invalid length.
         :raises ConfigurationError: if provided ``base_url`` is invalid.
         """
-        if self.access_token is None:
-            raise ConfigurationError('No access token provided. '
+
+        if self.client_secret is None:
+            raise ConfigurationError('No client secret provided. '
                                      'Set your access token during client initialization using: '
-                                     '"basecrm.Client(access_token= <YOUR_PERSONAL_ACCESS_TOKEN>)"')
+                                     '"basecrm.Client(client_secret = <YOUR_APPS_CLIENT_SECRET>)"')
+
+        if not self.base_url or not re.match(self.URL_REGEXP, self.base_url):
+            raise ConfigurationError('Provided base url is invalid '
+                                     'as it not a valid URI. '
+                                     'Please make sure it incldues the schema part, '
+                                     'both http and https are accepted, '
+                                     'and the hierarchical part')
+
+        if self.access_token is None:
+            if self.authorization_code:
+                return True
+            else:
+                raise ConfigurationError('No access token provided. '
+                                         'Set your access token during client initialization using: '
+                                         '"basecrm.Client(access_token = <YOUR_PERSONAL_ACCESS_TOKEN>)"')
 
         if re.search(r'\s', self.access_token):
             raise ConfigurationError('Provided access token is invalid '
@@ -47,12 +65,5 @@ class Configuration(object):
         #     raise ConfigurationError('Provided access token is invalid '
         #                              'as it has invalid length. '
         #                              'Please double-check your access token.')
-
-        if not self.base_url or not re.match(self.URL_REGEXP, self.base_url):
-            raise ConfigurationError('Provided base url is invalid '
-                                     'as it not a valid URI. '
-                                     'Please make sure it incldues the schema part, '
-                                     'both http and https are accepted, '
-                                     'and the hierarchical part')
 
         return True
