@@ -42,6 +42,7 @@ class Client(object):
 
         self.http_client = HttpClient(self.config)
 
+        self.__access_token = fortnox.services.AccessTokenService(self.http_client)
         self.__customers = fortnox.services.CustomerService(self.http_client)
         self.__company_settings = fortnox.services.CompanySettingsService(self.http_client)
         self.__account_charts = fortnox.services.AccountChartsService(self.http_client)
@@ -59,6 +60,14 @@ class Client(object):
         self.__predefined_accounts = fortnox.services.PredefinedAccountService(self.http_client)
         self.__predefined_voucher_series = fortnox.services.PredefinedVoucherSeriesService(self.http_client)
         self.__assets = fortnox.services.AssetService(self.http_client)
+
+    @property
+    def token(self):
+        """
+        :return: :class:`AccessTokenService <fortnox.AccessTokenService>` object that gives you an access token that will be used in all other  actions.
+        :rtype: fortnox.AccessTokenService
+        """
+        return self.__access_token
 
     @property
     def customers(self):

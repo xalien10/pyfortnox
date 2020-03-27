@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyfortnox",
-    version="0.0.5",
+    version="0.0.6",
     author="Mahmudul Hasan",
     author_email="ikhtiarcse10ruet@gmail.com",
     description="A small package for Fortnox API",
