@@ -1,16 +1,16 @@
-class Service(object):
+class InvoicePaymentService(object):
     """
-    :class:`fortnox.<specific-service>` is used by :class:`fortnox.Client` to make
-    actions related to <specific-service> resource.
+    :class:`fortnox.InvoicePaymentService` is used by :class:`fortnox.Client` to make
+    actions related to InvoicePayment resource.
 
     Normally you won't instantiate this class directly.
     """
 
     """
-    Allowed attributes for <specific-service> to send to Fortnox backend servers.
+    Allowed attributes for InvoicePayment to send to Fortnox backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['Name']
-    SERVICE = "<specific-service>"
+    OPTS_KEYS_TO_PERSIST = ['InvoiceNumber', 'Amount', 'AmountCurrency']
+    SERVICE = "InvoicePayment"
 
     def __init__(self, http_client):
         """
@@ -25,96 +25,96 @@ class Service(object):
 
     def list(self, **params):
         """
-        Retrieve all <specific-service>
+        Retrieve all InvoicePayment
 
-        Returns all <specific-service> available to the Company, according to the parameters provided
+        Returns all InvoicePayment available to the Company, according to the parameters provided
 
-        :calls: ``get /<specific-service>``
+        :calls: ``get /invoicepayments``
         :param dict params: (optional) Search options.
-        :return: List of dictionaries that support attriubte-style access, which represent collection of Customers.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of InvoicePayment.
         :rtype: list
         """
 
-        _, _, customers = self.http_client.get("/<specific-service>", params=params)
-        return customers
+        _, _, invoice_payments = self.http_client.get("/invoicepayments", params=params)
+        return invoice_payments
 
-    def retrieve(self, id):
+    def retrieve(self, number):
         """
-        Retrieve a single <specific-service>
+        Retrieve a single InvoicePayment
 
-        Returns a single <specific-service> according to the unique <specific-service> ID provided
-        If the specified <specific-service> does not exist, this query returns an error
+        Returns a single InvoicePayment according to the unique InvoicePayment ID provided
+        If the specified InvoicePayment does not exist, this query returns an error
 
-        :calls: ``get /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :return: Dictionary that support attriubte-style access and represent <specific-service> resource.
+        :calls: ``get /invoicepayments/{number}``
+        :param int id: Unique identifier of a InvoicePayment.
+        :return: Dictionary that support attriubte-style access and represent InvoicePayment resource.
         :rtype: dict
         """
-        _, _, customer = self.http_client.get("/<specific-service>/{id}".format(id=id))
-        return customer
+        _, _, invoice_payment = self.http_client.get("/invoicepayments/{number}".format(number=number))
+        return invoice_payment
 
     def create(self, *args, **kwargs):
         """
-        Create a <specific-service>
+        Create a InvoicePayment
 
-        Creates a new customer
-        **Notice** the customer's name **must** be unique within the scope of the resource_type
+        Creates a new InvoicePayment
+        **Notice** the InvoicePayment's name **must** be unique within the scope of the resource_type
 
-        :calls: ``post /customers``
-        :param tuple *args: (optional) Single object representing <specific-service> resource.
-        :param dict **kwargs: (optional) Customer attributes.
-        :return: Dictionary that support attriubte-style access and represents newely created Customer resource.
+        :calls: ``post /invoicepayments``
+        :param tuple *args: (optional) Single object representing InvoicePayment resource.
+        :param dict **kwargs: (optional) invoice_payment attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created InvoicePayment resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for InvoicePayment are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.post("/<specific-service>", body=attributes)
-        return customer
+        _, _, invoice_payment = self.http_client.post("/invoicepayments", body=attributes)
+        return invoice_payment
 
-    def update(self, id, *args, **kwargs):
+    def update(self, number, *args, **kwargs):
         """
-        Update a <specific-service>
+        Update a InvoicePayment
 
-        Updates a <specific-service>'s information
-        If the specified <specific-service> does not exist, this query will return an error
-        **Notice** if you want to update a <specific-service>, you **must** make sure the <specific-service>'s name is unique within the scope of the specified resource
+        Updates a InvoicePayment's information
+        If the specified InvoicePayment does not exist, this query will return an error
+        **Notice** if you want to update a InvoicePayment, you **must** make sure the InvoicePayment's name is unique within the scope of the specified resource
 
-        :calls: ``put /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :param tuple *args: (optional) Single object representing <specific-service> resource which attributes should be updated.
-        :param dict **kwargs: (optional) <specific-service> attributes to update.
-        :return: Dictionary that support attriubte-style access and represents updated <specific-service> resource.
+        :calls: ``put /invoicepayments/{number}``
+        :param int id: Unique identifier of a InvoicePayment.
+        :param tuple *args: (optional) Single object representing InvoicePayment resource which attributes should be updated.
+        :param dict **kwargs: (optional) InvoicePayment attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated InvoicePayment resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for InvoicePayment are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items())
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.put("/customers/{id}".format(id=id), body=attributes)
-        return customer
+        _, _, invoice_payment = self.http_client.put("/invoicepayments/{number}".format(number=number), body=attributes)
+        return invoice_payment
 
-    def destroy(self, id):
+    def destroy(self, number):
         """
-        Delete a <specific-service>
+        Delete a InvoicePayment
 
-        Deletes an existing <specific-service>
-        If the specified <specific-service> is assigned to any resource, we will remove this <specific-service> from all such resources
-        If the specified <specific-service> does not exist, this query will return an error
+        Deletes an existing InvoicePayment
+        If the specified InvoicePayment is assigned to any resource, we will remove this InvoicePayment from all such resources
+        If the specified InvoicePayment does not exist, this query will return an error
         This operation cannot be undone
 
-        :calls: ``delete /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
+        :calls: ``delete /invoicepayments/{number}``
+        :param int id: Unique identifier of a InvoicePayment.
         :return: True if the operation succeeded.
         :rtype: bool
         """
 
-        status_code, _, _ = self.http_client.delete("/<specific-service>/{id}".format(id=id))
+        status_code, _, _ = self.http_client.delete("/invoicepayments/{number}".format(number=number))
         return status_code == 204
