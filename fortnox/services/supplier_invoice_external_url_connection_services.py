@@ -1,16 +1,16 @@
-class Service(object):
+class SupplierInvoiceExternalURLConnectionService(object):
     """
-    :class:`fortnox.<specific-service>` is used by :class:`fortnox.Client` to make
-    actions related to <specific-service> resource.
+    :class:`fortnox.SupplierInvoiceExternalURLConnectionService` is used by :class:`fortnox.Client` to make
+    actions related to SupplierInvoiceExternalURLConnection resource.
 
     Normally you won't instantiate this class directly.
     """
 
     """
-    Allowed attributes for <specific-service> to send to Fortnox backend servers.
+    Allowed attributes for SupplierInvoiceExternalURLConnection to send to Fortnox backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['Name']
-    SERVICE = "<specific-service>"
+    OPTS_KEYS_TO_PERSIST = ['SupplierInvoiceNumber', 'SupplierInvoiceNumber']
+    SERVICE = "SupplierInvoiceExternalURLConnection"
 
     def __init__(self, http_client):
         """
@@ -25,96 +25,100 @@ class Service(object):
 
     def list(self, **params):
         """
-        Retrieve all <specific-service>
+        Retrieve all SupplierInvoiceExternalURLConnection
 
-        Returns all <specific-service> available to the Company, according to the parameters provided
+        Returns all SupplierInvoiceExternalURLConnection available to the Company, according to the parameters provided
 
-        :calls: ``get /<specific-service>``
+        :calls: ``get /supplierinvoiceexternalurlconnections``
         :param dict params: (optional) Search options.
-        :return: List of dictionaries that support attriubte-style access, which represent collection of Customers.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of SupplierInvoiceExternalURLConnection.
         :rtype: list
         """
 
-        _, _, customers = self.http_client.get("/<specific-service>", params=params)
-        return customers
+        _, _, supplier_invoice_external_url_connections = self.http_client.get("/supplierinvoiceexternalurlconnections",
+                                                                               params=params)
+        return supplier_invoice_external_url_connections
 
     def retrieve(self, id):
         """
-        Retrieve a single <specific-service>
+        Retrieve a single SupplierInvoiceExternalURLConnection
 
-        Returns a single <specific-service> according to the unique <specific-service> ID provided
-        If the specified <specific-service> does not exist, this query returns an error
+        Returns a single SupplierInvoiceExternalURLConnection according to the unique SupplierInvoiceExternalURLConnection ID provided
+        If the specified SupplierInvoiceExternalURLConnection does not exist, this query returns an error
 
-        :calls: ``get /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :return: Dictionary that support attriubte-style access and represent <specific-service> resource.
+        :calls: ``get /supplierinvoiceexternalurlconnections/{id}``
+        :param int id: Unique identifier of a SupplierInvoiceExternalURLConnection.
+        :return: Dictionary that support attriubte-style access and represent SupplierInvoiceExternalURLConnection resource.
         :rtype: dict
         """
-        _, _, customer = self.http_client.get("/<specific-service>/{id}".format(id=id))
-        return customer
+        _, _, supplier_invoice_external_url_connection = self.http_client.get(
+            "/supplierinvoiceexternalurlconnections/{id}".format(id=id))
+        return supplier_invoice_external_url_connection
 
     def create(self, *args, **kwargs):
         """
-        Create a <specific-service>
+        Create a SupplierInvoiceExternalURLConnection
 
-        Creates a new customer
-        **Notice** the customer's name **must** be unique within the scope of the resource_type
+        Creates a new SupplierInvoiceExternalURLConnection
+        **Notice** the SupplierInvoiceExternalURLConnection's name **must** be unique within the scope of the resource_type
 
-        :calls: ``post /customers``
-        :param tuple *args: (optional) Single object representing <specific-service> resource.
-        :param dict **kwargs: (optional) Customer attributes.
-        :return: Dictionary that support attriubte-style access and represents newely created Customer resource.
+        :calls: ``post /supplierinvoiceexternalurlconnections``
+        :param tuple *args: (optional) Single object representing SupplierInvoiceExternalURLConnection resource.
+        :param dict **kwargs: (optional) supplier_invoice_external_url_connection attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created SupplierInvoiceExternalURLConnection resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for SupplierInvoiceExternalURLConnection are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.post("/<specific-service>", body=attributes)
-        return customer
+        _, _, supplier_invoice_external_url_connection = self.http_client.post("/supplierinvoiceexternalurlconnections",
+                                                                               body=attributes)
+        return supplier_invoice_external_url_connection
 
     def update(self, id, *args, **kwargs):
         """
-        Update a <specific-service>
+        Update a SupplierInvoiceExternalURLConnection
 
-        Updates a <specific-service>'s information
-        If the specified <specific-service> does not exist, this query will return an error
-        **Notice** if you want to update a <specific-service>, you **must** make sure the <specific-service>'s name is unique within the scope of the specified resource
+        Updates a SupplierInvoiceExternalURLConnection's information
+        If the specified SupplierInvoiceExternalURLConnection does not exist, this query will return an error
+        **Notice** if you want to update a SupplierInvoiceExternalURLConnection, you **must** make sure the SupplierInvoiceExternalURLConnection's name is unique within the scope of the specified resource
 
-        :calls: ``put /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :param tuple *args: (optional) Single object representing <specific-service> resource which attributes should be updated.
-        :param dict **kwargs: (optional) <specific-service> attributes to update.
-        :return: Dictionary that support attriubte-style access and represents updated <specific-service> resource.
+        :calls: ``put /supplierinvoiceexternalurlconnections/{id}``
+        :param int id: Unique identifier of a SupplierInvoiceExternalURLConnection.
+        :param tuple *args: (optional) Single object representing SupplierInvoiceExternalURLConnection resource which attributes should be updated.
+        :param dict **kwargs: (optional) SupplierInvoiceExternalURLConnection attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated SupplierInvoiceExternalURLConnection resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for SupplierInvoiceExternalURLConnection are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items())
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.put("/customers/{id}".format(id=id), body=attributes)
-        return customer
+        _, _, supplier_invoice_external_url_connection = self.http_client.put(
+            "/supplierinvoiceexternalurlconnections/{id}".format(id=id), body=attributes)
+        return supplier_invoice_external_url_connection
 
     def destroy(self, id):
         """
-        Delete a <specific-service>
+        Delete a SupplierInvoiceExternalURLConnection
 
-        Deletes an existing <specific-service>
-        If the specified <specific-service> is assigned to any resource, we will remove this <specific-service> from all such resources
-        If the specified <specific-service> does not exist, this query will return an error
+        Deletes an existing SupplierInvoiceExternalURLConnection
+        If the specified SupplierInvoiceExternalURLConnection is assigned to any resource, we will remove this SupplierInvoiceExternalURLConnection from all such resources
+        If the specified SupplierInvoiceExternalURLConnection does not exist, this query will return an error
         This operation cannot be undone
 
-        :calls: ``delete /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
+        :calls: ``delete /supplierinvoiceexternalurlconnections/{id}``
+        :param int id: Unique identifier of a SupplierInvoiceExternalURLConnection.
         :return: True if the operation succeeded.
         :rtype: bool
         """
 
-        status_code, _, _ = self.http_client.delete("/<specific-service>/{id}".format(id=id))
+        status_code, _, _ = self.http_client.delete("/supplierinvoiceexternalurlconnections/{id}".format(id=id))
         return status_code == 204

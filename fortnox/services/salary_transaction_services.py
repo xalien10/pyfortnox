@@ -1,16 +1,16 @@
-class Service(object):
+class SalaryTransactionService(object):
     """
-    :class:`fortnox.<specific-service>` is used by :class:`fortnox.Client` to make
-    actions related to <specific-service> resource.
+    :class:`fortnox.SalaryTransactionService` is used by :class:`fortnox.Client` to make
+    actions related to SalaryTransaction resource.
 
     Normally you won't instantiate this class directly.
     """
 
     """
-    Allowed attributes for <specific-service> to send to Fortnox backend servers.
+    Allowed attributes for SalaryTransaction to send to Fortnox backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['Name']
-    SERVICE = "<specific-service>"
+    OPTS_KEYS_TO_PERSIST = ['EmployeeId', 'SalaryCode', 'Date', 'Number', 'Amount']
+    SERVICE = "SalaryTransaction"
 
     def __init__(self, http_client):
         """
@@ -25,96 +25,98 @@ class Service(object):
 
     def list(self, **params):
         """
-        Retrieve all <specific-service>
+        Retrieve all SalaryTransaction
 
-        Returns all <specific-service> available to the Company, according to the parameters provided
+        Returns all SalaryTransaction available to the Company, according to the parameters provided
 
-        :calls: ``get /<specific-service>``
+        :calls: ``get /salarytransactions``
         :param dict params: (optional) Search options.
-        :return: List of dictionaries that support attriubte-style access, which represent collection of Customers.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of SalaryTransaction.
         :rtype: list
         """
 
-        _, _, customers = self.http_client.get("/<specific-service>", params=params)
-        return customers
+        _, _, salary_transactions = self.http_client.get("/salarytransactions", params=params)
+        return salary_transactions
 
-    def retrieve(self, id):
+    def retrieve(self, salary_row):
         """
-        Retrieve a single <specific-service>
+        Retrieve a single SalaryTransaction
 
-        Returns a single <specific-service> according to the unique <specific-service> ID provided
-        If the specified <specific-service> does not exist, this query returns an error
+        Returns a single SalaryTransaction according to the unique SalaryTransaction ID provided
+        If the specified SalaryTransaction does not exist, this query returns an error
 
-        :calls: ``get /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :return: Dictionary that support attriubte-style access and represent <specific-service> resource.
+        :calls: ``get /salarytransactions/{salary_row}``
+        :param int id: Unique identifier of a SalaryTransaction.
+        :return: Dictionary that support attriubte-style access and represent SalaryTransaction resource.
         :rtype: dict
         """
-        _, _, customer = self.http_client.get("/<specific-service>/{id}".format(id=id))
-        return customer
+        _, _, salary_transaction = self.http_client.get(
+            "/salarytransactions/{salary_row}".format(salary_row=salary_row))
+        return salary_transaction
 
     def create(self, *args, **kwargs):
         """
-        Create a <specific-service>
+        Create a SalaryTransaction
 
-        Creates a new customer
-        **Notice** the customer's name **must** be unique within the scope of the resource_type
+        Creates a new SalaryTransaction
+        **Notice** the SalaryTransaction's name **must** be unique within the scope of the resource_type
 
-        :calls: ``post /customers``
-        :param tuple *args: (optional) Single object representing <specific-service> resource.
-        :param dict **kwargs: (optional) Customer attributes.
-        :return: Dictionary that support attriubte-style access and represents newely created Customer resource.
+        :calls: ``post /salarytransactions``
+        :param tuple *args: (optional) Single object representing SalaryTransaction resource.
+        :param dict **kwargs: (optional) salary_transaction attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created SalaryTransaction resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for SalaryTransaction are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.post("/<specific-service>", body=attributes)
-        return customer
+        _, _, salary_transaction = self.http_client.post("/salarytransactions", body=attributes)
+        return salary_transaction
 
-    def update(self, id, *args, **kwargs):
+    def update(self, salary_row, *args, **kwargs):
         """
-        Update a <specific-service>
+        Update a SalaryTransaction
 
-        Updates a <specific-service>'s information
-        If the specified <specific-service> does not exist, this query will return an error
-        **Notice** if you want to update a <specific-service>, you **must** make sure the <specific-service>'s name is unique within the scope of the specified resource
+        Updates a SalaryTransaction's information
+        If the specified SalaryTransaction does not exist, this query will return an error
+        **Notice** if you want to update a SalaryTransaction, you **must** make sure the SalaryTransaction's name is unique within the scope of the specified resource
 
-        :calls: ``put /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :param tuple *args: (optional) Single object representing <specific-service> resource which attributes should be updated.
-        :param dict **kwargs: (optional) <specific-service> attributes to update.
-        :return: Dictionary that support attriubte-style access and represents updated <specific-service> resource.
+        :calls: ``put /salarytransactions/{salary_row}``
+        :param int id: Unique identifier of a SalaryTransaction.
+        :param tuple *args: (optional) Single object representing SalaryTransaction resource which attributes should be updated.
+        :param dict **kwargs: (optional) SalaryTransaction attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated SalaryTransaction resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for SalaryTransaction are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items())
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.put("/customers/{id}".format(id=id), body=attributes)
-        return customer
+        _, _, salary_transaction = self.http_client.put(
+            "/salarytransactions/{salary_row}".format(salary_row=salary_row), body=attributes)
+        return salary_transaction
 
-    def destroy(self, id):
+    def destroy(self, salary_row):
         """
-        Delete a <specific-service>
+        Delete a SalaryTransaction
 
-        Deletes an existing <specific-service>
-        If the specified <specific-service> is assigned to any resource, we will remove this <specific-service> from all such resources
-        If the specified <specific-service> does not exist, this query will return an error
+        Deletes an existing SalaryTransaction
+        If the specified SalaryTransaction is assigned to any resource, we will remove this SalaryTransaction from all such resources
+        If the specified SalaryTransaction does not exist, this query will return an error
         This operation cannot be undone
 
-        :calls: ``delete /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
+        :calls: ``delete /salarytransactions/{salary_row}``
+        :param int id: Unique identifier of a SalaryTransaction.
         :return: True if the operation succeeded.
         :rtype: bool
         """
 
-        status_code, _, _ = self.http_client.delete("/<specific-service>/{id}".format(id=id))
+        status_code, _, _ = self.http_client.delete("/salarytransactions/{salary_row}".format(salary_row=salary_row))
         return status_code == 204
