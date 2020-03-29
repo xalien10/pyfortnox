@@ -1,16 +1,35 @@
-class Service(object):
+class InvoiceAccrualService(object):
     """
-    :class:`fortnox.<specific-service>` is used by :class:`fortnox.Client` to make
-    actions related to <specific-service> resource.
+    :class:`fortnox.InvoiceAccrualService` is used by :class:`fortnox.Client` to make
+    actions related to InvoiceAccrual resource.
 
     Normally you won't instantiate this class directly.
     """
 
     """
-    Allowed attributes for <specific-service> to send to Fortnox backend servers.
+    Allowed attributes for InvoiceAccrual to send to Fortnox backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['Name']
-    SERVICE = "<specific-service>"
+    OPTS_KEYS_TO_PERSIST = ['AccrualAccount', 'StartDate', 'InvoiceAccrualRows', 'InvoiceNumber', 'Period',
+                            'RevenueAccount', 'EndDate', 'Total']
+
+    """
+    InvoiceAccrualRows will have following structures:
+        "InvoiceAccrualRows": [
+          {
+            "Account": 2990,
+            "Credit": 0,
+            "Debit": 2000
+          },
+          {
+            "Account": 3990,
+            "Credit": 2000,
+            "Debit": 0
+          },
+          ...............
+        ]
+    """
+
+    SERVICE = "InvoiceAccrual"
 
     def __init__(self, http_client):
         """
@@ -25,96 +44,99 @@ class Service(object):
 
     def list(self, **params):
         """
-        Retrieve all <specific-service>
+        Retrieve all InvoiceAccrual
 
-        Returns all <specific-service> available to the Company, according to the parameters provided
+        Returns all InvoiceAccrual available to the Company, according to the parameters provided
 
-        :calls: ``get /<specific-service>``
+        :calls: ``get /invoiceaccruals``
         :param dict params: (optional) Search options.
-        :return: List of dictionaries that support attriubte-style access, which represent collection of Customers.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of InvoiceAccrual.
         :rtype: list
         """
 
-        _, _, customers = self.http_client.get("/<specific-service>", params=params)
-        return customers
+        _, _, invoice_accruals = self.http_client.get("/invoiceaccruals", params=params)
+        return invoice_accruals
 
-    def retrieve(self, id):
+    def retrieve(self, invoice_number):
         """
-        Retrieve a single <specific-service>
+        Retrieve a single InvoiceAccrual
 
-        Returns a single <specific-service> according to the unique <specific-service> ID provided
-        If the specified <specific-service> does not exist, this query returns an error
+        Returns a single InvoiceAccrual according to the unique InvoiceAccrual ID provided
+        If the specified InvoiceAccrual does not exist, this query returns an error
 
-        :calls: ``get /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :return: Dictionary that support attriubte-style access and represent <specific-service> resource.
+        :calls: ``get /invoiceaccruals/{invoice_number}``
+        :param int id: Unique identifier of a InvoiceAccrual.
+        :return: Dictionary that support attriubte-style access and represent InvoiceAccrual resource.
         :rtype: dict
         """
-        _, _, customer = self.http_client.get("/<specific-service>/{id}".format(id=id))
-        return customer
+        _, _, invoice_accrual = self.http_client.get(
+            "/invoiceaccruals/{invoice_number}".format(invoice_number=invoice_number))
+        return invoice_accrual
 
     def create(self, *args, **kwargs):
         """
-        Create a <specific-service>
+        Create a InvoiceAccrual
 
-        Creates a new customer
-        **Notice** the customer's name **must** be unique within the scope of the resource_type
+        Creates a new InvoiceAccrual
+        **Notice** the InvoiceAccrual's name **must** be unique within the scope of the resource_type
 
-        :calls: ``post /customers``
-        :param tuple *args: (optional) Single object representing <specific-service> resource.
-        :param dict **kwargs: (optional) Customer attributes.
-        :return: Dictionary that support attriubte-style access and represents newely created Customer resource.
+        :calls: ``post /invoiceaccruals``
+        :param tuple *args: (optional) Single object representing InvoiceAccrual resource.
+        :param dict **kwargs: (optional) invoice_accrual attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created InvoiceAccrual resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for InvoiceAccrual are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.post("/<specific-service>", body=attributes)
-        return customer
+        _, _, invoice_accrual = self.http_client.post("/invoiceaccruals", body=attributes)
+        return invoice_accrual
 
-    def update(self, id, *args, **kwargs):
+    def update(self, invoice_number, *args, **kwargs):
         """
-        Update a <specific-service>
+        Update a InvoiceAccrual
 
-        Updates a <specific-service>'s information
-        If the specified <specific-service> does not exist, this query will return an error
-        **Notice** if you want to update a <specific-service>, you **must** make sure the <specific-service>'s name is unique within the scope of the specified resource
+        Updates a InvoiceAccrual's information
+        If the specified InvoiceAccrual does not exist, this query will return an error
+        **Notice** if you want to update a InvoiceAccrual, you **must** make sure the InvoiceAccrual's name is unique within the scope of the specified resource
 
-        :calls: ``put /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :param tuple *args: (optional) Single object representing <specific-service> resource which attributes should be updated.
-        :param dict **kwargs: (optional) <specific-service> attributes to update.
-        :return: Dictionary that support attriubte-style access and represents updated <specific-service> resource.
+        :calls: ``put /invoiceaccruals/{invoice_number}``
+        :param int id: Unique identifier of a InvoiceAccrual.
+        :param tuple *args: (optional) Single object representing InvoiceAccrual resource which attributes should be updated.
+        :param dict **kwargs: (optional) InvoiceAccrual attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated InvoiceAccrual resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for InvoiceAccrual are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items())
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.put("/customers/{id}".format(id=id), body=attributes)
-        return customer
+        _, _, invoice_accrual = self.http_client.put(
+            "/invoiceaccruals/{invoice_number}".format(invoice_number=invoice_number), body=attributes)
+        return invoice_accrual
 
-    def destroy(self, id):
+    def destroy(self, invoice_number):
         """
-        Delete a <specific-service>
+        Delete a InvoiceAccrual
 
-        Deletes an existing <specific-service>
-        If the specified <specific-service> is assigned to any resource, we will remove this <specific-service> from all such resources
-        If the specified <specific-service> does not exist, this query will return an error
+        Deletes an existing InvoiceAccrual
+        If the specified InvoiceAccrual is assigned to any resource, we will remove this InvoiceAccrual from all such resources
+        If the specified InvoiceAccrual does not exist, this query will return an error
         This operation cannot be undone
 
-        :calls: ``delete /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
+        :calls: ``delete /invoiceaccruals/{invoice_number}``
+        :param int id: Unique identifier of a InvoiceAccrual.
         :return: True if the operation succeeded.
         :rtype: bool
         """
 
-        status_code, _, _ = self.http_client.delete("/<specific-service>/{id}".format(id=id))
+        status_code, _, _ = self.http_client.delete(
+            "/invoiceaccruals/{invoice_number}".format(invoice_number=invoice_number))
         return status_code == 204

@@ -1,16 +1,31 @@
-class Service(object):
+class ContractTemplateService(object):
     """
-    :class:`fortnox.<specific-service>` is used by :class:`fortnox.Client` to make
-    actions related to <specific-service> resource.
+    :class:`fortnox.ContractTemplateService` is used by :class:`fortnox.Client` to make
+    actions related to ContractTemplate resource.
 
     Normally you won't instantiate this class directly.
     """
 
     """
-    Allowed attributes for <specific-service> to send to Fortnox backend servers.
+    Allowed attributes for ContractTemplate to send to Fortnox backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['Name']
-    SERVICE = "<specific-service>"
+    OPTS_KEYS_TO_PERSIST = ['ContractLength', 'Continuous', 'InvoiceInterval', 'InvoiceRows', 'TemplateName']
+
+    """
+    InvoiceRows should have the following structures,
+        "InvoiceRows": [
+          {
+            "ArticleNumber": "11",
+            "DeliveredQuantity": 10
+          },
+          {
+            "ArticleNumber": "12",
+            "DeliveredQuantity": 12
+          },
+          ....................
+        ]
+    """
+    SERVICE = "ContractTemplate"
 
     def __init__(self, http_client):
         """
@@ -25,96 +40,80 @@ class Service(object):
 
     def list(self, **params):
         """
-        Retrieve all <specific-service>
+        Retrieve all ContractTemplate
 
-        Returns all <specific-service> available to the Company, according to the parameters provided
+        Returns all ContractTemplate available to the Company, according to the parameters provided
 
-        :calls: ``get /<specific-service>``
+        :calls: ``get /contracttemplates``
         :param dict params: (optional) Search options.
-        :return: List of dictionaries that support attriubte-style access, which represent collection of Customers.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of ContractTemplate.
         :rtype: list
         """
 
-        _, _, customers = self.http_client.get("/<specific-service>", params=params)
-        return customers
+        _, _, contract_templates = self.http_client.get("/contracttemplates", params=params)
+        return contract_templates
 
-    def retrieve(self, id):
+    def retrieve(self, template_number):
         """
-        Retrieve a single <specific-service>
+        Retrieve a single ContractTemplate
 
-        Returns a single <specific-service> according to the unique <specific-service> ID provided
-        If the specified <specific-service> does not exist, this query returns an error
+        Returns a single ContractTemplate according to the unique ContractTemplate ID provided
+        If the specified ContractTemplate does not exist, this query returns an error
 
-        :calls: ``get /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :return: Dictionary that support attriubte-style access and represent <specific-service> resource.
+        :calls: ``get /contracttemplates/{template_number}``
+        :param int id: Unique identifier of a ContractTemplate.
+        :return: Dictionary that support attriubte-style access and represent ContractTemplate resource.
         :rtype: dict
         """
-        _, _, customer = self.http_client.get("/<specific-service>/{id}".format(id=id))
-        return customer
+        _, _, contract_template = self.http_client.get(
+            "/contracttemplates/{template_number}".format(template_number=template_number))
+        return contract_template
 
     def create(self, *args, **kwargs):
         """
-        Create a <specific-service>
+        Create a ContractTemplate
 
-        Creates a new customer
-        **Notice** the customer's name **must** be unique within the scope of the resource_type
+        Creates a new ContractTemplate
+        **Notice** the ContractTemplate's name **must** be unique within the scope of the resource_type
 
-        :calls: ``post /customers``
-        :param tuple *args: (optional) Single object representing <specific-service> resource.
-        :param dict **kwargs: (optional) Customer attributes.
-        :return: Dictionary that support attriubte-style access and represents newely created Customer resource.
+        :calls: ``post /contracttemplates``
+        :param tuple *args: (optional) Single object representing ContractTemplate resource.
+        :param dict **kwargs: (optional) contract_template attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created ContractTemplate resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for ContractTemplate are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.post("/<specific-service>", body=attributes)
-        return customer
+        _, _, contract_template = self.http_client.post("/contracttemplates", body=attributes)
+        return contract_template
 
-    def update(self, id, *args, **kwargs):
+    def update(self, template_number, *args, **kwargs):
         """
-        Update a <specific-service>
+        Update a ContractTemplate
 
-        Updates a <specific-service>'s information
-        If the specified <specific-service> does not exist, this query will return an error
-        **Notice** if you want to update a <specific-service>, you **must** make sure the <specific-service>'s name is unique within the scope of the specified resource
+        Updates a ContractTemplate's information
+        If the specified ContractTemplate does not exist, this query will return an error
+        **Notice** if you want to update a ContractTemplate, you **must** make sure the ContractTemplate's name is unique within the scope of the specified resource
 
-        :calls: ``put /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :param tuple *args: (optional) Single object representing <specific-service> resource which attributes should be updated.
-        :param dict **kwargs: (optional) <specific-service> attributes to update.
-        :return: Dictionary that support attriubte-style access and represents updated <specific-service> resource.
+        :calls: ``put /contracttemplates/{template_number}``
+        :param int id: Unique identifier of a ContractTemplate.
+        :param tuple *args: (optional) Single object representing ContractTemplate resource which attributes should be updated.
+        :param dict **kwargs: (optional) ContractTemplate attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated ContractTemplate resource.
         :rtype: dict
         """
 
         if not args and not kwargs:
-            raise Exception('attributes for <specific-service> are missing')
+            raise Exception('attributes for ContractTemplate are missing')
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.items())
         attributes.update({'service': self.SERVICE})
-        _, _, customer = self.http_client.put("/customers/{id}".format(id=id), body=attributes)
-        return customer
-
-    def destroy(self, id):
-        """
-        Delete a <specific-service>
-
-        Deletes an existing <specific-service>
-        If the specified <specific-service> is assigned to any resource, we will remove this <specific-service> from all such resources
-        If the specified <specific-service> does not exist, this query will return an error
-        This operation cannot be undone
-
-        :calls: ``delete /<specific-service>/{id}``
-        :param int id: Unique identifier of a <specific-service>.
-        :return: True if the operation succeeded.
-        :rtype: bool
-        """
-
-        status_code, _, _ = self.http_client.delete("/<specific-service>/{id}".format(id=id))
-        return status_code == 204
+        _, _, contract_template = self.http_client.put(
+            "/contracttemplates/{template_number}".format(template_number=template_number), body=attributes)
+        return contract_template
