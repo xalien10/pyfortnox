@@ -151,10 +151,10 @@ Sample below shows how to properly handle exceptions:
         client = fortnox.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>', client_secret='<YOUR_APPS_CLIENT_SECRET>')
         project = client.projects.create(Description='Website design', Status='ONGOING')
         print(project)
-    except basecrm.ConfigurationError as e:
+    except fortnox.ConfigurationError as e:
         #  Invalid client configuration option
         pass
-    except basecrm.ResourceError as e:
+    except fortnox.ResourceError as e:
         # Resource related error
         print 'Http status = ' + e.http_status
         print 'Request ID = ' + e.logref
@@ -163,7 +163,7 @@ Sample below shows how to properly handle exceptions:
             print 'code = ' + error.code
             print 'message = ' + error.message
             print 'details = ' + error.details
-    except basecrm.RequestError as e:
+    except fortnox.RequestError as e:
         # Invalid query parameters, authentication error etc.
         pass
     except Exception as e:
@@ -178,7 +178,7 @@ files.
 
 To know about available services, see Fortnox's Official Developer Documentation
 ---------------------------------------------------------------------------------
-######https://developer.fortnox.se/documentation/
+https://developer.fortnox.se/documentation/
 
 N.B. Below services are not implemented in the latest release of pyfortnox:
 
