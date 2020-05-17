@@ -169,6 +169,40 @@ Sample below shows how to properly handle exceptions:
     except Exception as e:
         # Other kind of exceptioni, probably connectivity related
         pass
+Sample below shows how to send files via inbox service with handled exceptions:
+.. code:: python
+
+    try:
+        # Instantiate a client.
+        client = fortnox.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>', client_secret='<YOUR_APPS_CLIENT_SECRET>')
+        
+        from io import BytesIO
+        file =  open('/your/local/file/path/voucher_file.jpeg', 'rb')
+        
+        buffered_file = BytesIO(file.read())
+        file_name = 'voucher1.jpg'
+        
+        voucher_file = client.inbox.create(path='inbox_v', file=buffered_file, file_name=file_name)
+        
+        print(voucher_file)
+    except fortnox.ConfigurationError as e:
+        #  Invalid client configuration option
+        pass
+    except fortnox.ResourceError as e:
+        # Resource related error
+        print 'Http status = ' + e.http_status
+        print 'Request ID = ' + e.logref
+        for error in e.errors:
+            print 'field = ' + error.field
+            print 'code = ' + error.code
+            print 'message = ' + error.message
+            print 'details = ' + error.details
+    except fortnox.RequestError as e:
+        # Invalid query parameters, authentication error etc.
+        pass
+    except Exception as e:
+        # Other kind of exceptioni, probably connectivity related
+        pass
 
 Resources and actions
 ---------------------
@@ -183,12 +217,11 @@ https://developer.fortnox.se/documentation/
 N.B. Below services are not implemented in the latest release of pyfortnox:
 
 1. Digital Receipt
-2. Inbox
-3. Warehouse Custom Inbound Documents
-4. Warehouse Custom Outbound Documents
-5. Warehouse Information
-6. Warehouse Item Summary
-7. Warehouse Resource Specific Fields
+2. Warehouse Custom Inbound Documents
+3. Warehouse Custom Outbound Documents
+4. Warehouse Information
+5. Warehouse Item Summary
+6. Warehouse Resource Specific Fields
 
 
 Tests
