@@ -68,6 +68,7 @@ class Client(object):
         self.__contracts = fortnox.services.ContractService(self.http_client)
         self.__contract_templates = fortnox.services.ContractTemplateService(self.http_client)
         self.__cost_centers = fortnox.services.CostCenterService(self.http_client)
+        self.__inbox = fortnox.services.InboxService(self.http_client)
         self.__invoice_accruals = fortnox.services.InvoiceAccrualService(self.http_client)
         self.__invoice_payments = fortnox.services.InvoicePaymentService(self.http_client)
         self.__labels = fortnox.services.LabelService(self.http_client)
@@ -548,3 +549,11 @@ class Client(object):
         :rtype: fortnox.WayOfDeliveryService
         """
         return self.__way_of_deliveries
+
+    @property
+    def inbox(self):
+        """
+        :return: :class:`InboxService <fortnox.InboxService>` object that gives you an access to Inbox related actions.
+        :rtype: fortnox.InboxService
+        """
+        return self.__inbox

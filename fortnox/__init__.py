@@ -21,6 +21,6 @@ from fortnox.services import (
     SupplierInvoiceFileConnectionService, SupplierInvoicePaymentService, SupplierInvoiceService,
     SupplierService, TaxReductionService, TermsOfDeliveryService, TermsOfPaymentService,
     TrustedDomainService, TrustedSenderService, UnitService, VoucherFileConnectionService,
-    VoucherSeriesService, VoucherService, WayOfDeliveryService,
+    VoucherSeriesService, VoucherService, WayOfDeliveryService, InboxService,
 )
 from fortnox.client import Client

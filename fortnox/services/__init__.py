@@ -25,6 +25,7 @@ from .contract_accrual_services import ContractAccrualService
 from .contract_services import ContractService
 from .contract_template_services import ContractTemplateService
 from .cost_center_services import CostCenterService
+from .inbox_services import InboxService
 from .invoice_accrual_services import InvoiceAccrualService
 from .invoice_payment_services import InvoicePaymentService
 from .label_services import LabelService

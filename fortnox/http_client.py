@@ -3,6 +3,7 @@ from decimal import Decimal
 
 import requests
 from munch import munchify
+from requests_toolbelt import MultipartEncoder
 
 from fortnox.errors import ResourceError, RateLimitError, RequestError, ServerError
 
@@ -150,7 +151,20 @@ class HttpClient(object):
 
         if body is not None:
             # payload = body if raw else self.wrap_envelope(body)
-            body = json.dumps(self.wrap_envelope(body), cls=DecimalEncoder)
+            if 'file' in body:
+                # if endpoint contains file
+                sent_file = body.get('file')
+                file_name = body.pop('file_name')
+                file = MultipartEncoder(
+                    fields={
+                        'file': (file_name, sent_file, 'application/octet-stream')
+                    }
+                )
+                headers['Content-Type'] = file.content_type
+                headers['Accept'] = '*/*'
+                body = file
+            else:
+                body = json.dumps(self.wrap_envelope(body), cls=DecimalEncoder)
         resp = requests.request(method, url,
                                 params=params,
                                 data=body,
