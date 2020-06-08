@@ -29,16 +29,15 @@ Usage
 
     import fortnox
 
-    # Then we instantiate a client (as shown below)
 
 #### Build a client
 
 
 _Using this api without authentication gives an error_
 
-~~~~~~~~~~~~~~
-client = fortnox.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>', client_secret='<YOUR_APPS_CLIENT_SECRET>')
-~~~~~~~~~~~~~~
+    # Then we instantiate a client (as shown below)
+    client = fortnox.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>', client_secret='<YOUR_APPS_CLIENT_SECRET>')
+
 #### Client Options
 
 
