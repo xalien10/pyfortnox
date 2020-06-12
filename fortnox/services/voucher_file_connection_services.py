@@ -61,7 +61,7 @@ class VoucherFileConnectionService(object):
         Creates a new VoucherFileConnection
         **Notice** the VoucherFileConnection's name **must** be unique within the scope of the resource_type
 
-        :calls: ``post /voucherfileconnections``
+        :calls: ``post /voucherfileconnections`` or ``/voucherfileconnections?financialyeardate={financialyeardate}``
         :param tuple *args: (optional) Single object representing VoucherFileConnection resource.
         :param dict **kwargs: (optional) voucher_file_connection attributes.
         :return: Dictionary that support attriubte-style access and represents newely created VoucherFileConnection resource.
@@ -72,9 +72,17 @@ class VoucherFileConnectionService(object):
             raise Exception('attributes for VoucherFileConnection are missing')
 
         attributes = args[0] if args else kwargs
+
+        financialyeardate = attributes.get('financialyeardate', None)
+        if financialyeardate:
+            path_name = "/voucherfileconnections?financialyeardate={financialyeardate}".format(
+                financialyeardate=financialyeardate)
+        else:
+            path_name = "/voucherfileconnections"
+
         attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
         attributes.update({'service': self.SERVICE})
-        _, _, voucher_file_connection = self.http_client.post("/voucherfileconnections", body=attributes)
+        _, _, voucher_file_connection = self.http_client.post(path_name, body=attributes)
         return voucher_file_connection
 
     def destroy(self, file_id):
