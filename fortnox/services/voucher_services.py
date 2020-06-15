@@ -9,7 +9,8 @@ class VoucherService(object):
     """
     Allowed attributes for Voucher to send to Fortnox backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['Description', 'VoucherSeries', 'TransactionDate', 'VoucherRows']
+    OPTS_KEYS_TO_PERSIST = ['Description', 'VoucherSeries', 'TransactionDate', 'VoucherRows',
+                            'Comments', 'CostCenter', 'Project']
 
     """
     VoucherRows has the following structures:
