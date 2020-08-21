@@ -147,7 +147,7 @@ client = fortnox.Client(
     authorization_code='<YOUR_APP_INTEGRATION_AUTHORIZATION_CODE>',
     client_secret='<YOUR_APPS_CLIENT_SECRET>'
 )
-obtained_token = client.token.client.token.access_token()
+obtained_token = client.token.access_token()
 access_token = obtained_token.AccessToken
 ```
 
