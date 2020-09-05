@@ -276,3 +276,7 @@ Contact
 -------
 
 Mahmudul Hasan (ikhtiarcse10ruet@gmail.com)
+
+***[Powered By](https://www.jetbrains.com/?from=pyfortnox)***
+
+<img src="images/jetbrains-variant-2.png" alt="JetBrains Logo" width="200" height="167">
