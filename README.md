@@ -279,4 +279,5 @@ Mahmudul Hasan (ikhtiarcse10ruet@gmail.com)
 
 ***[Powered By](https://www.jetbrains.com/?from=pyfortnox)***
 
-<a href="https://www.jetbrains.com/?from=pyfortnox"><img src="images/jetbrains-variant-2.png" alt="JetBrains Logo" width="200" height="167"></a>
+<a href="https://www.jetbrains.com/?from=pyfortnox"><img src="https://drive.google.com/uc?export=view&id=1ON2JobshY95GAmpbRNk53-YxYhGSPlik" alt="JetBrains Logo" width="200" height="217"></a>
+
