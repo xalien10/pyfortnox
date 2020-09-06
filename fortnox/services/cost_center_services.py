@@ -70,8 +70,8 @@ class CostCenterService(object):
         if not args and not kwargs:
             raise Exception('attributes for CostCenter are missing')
 
-        attributes = args[0] if args else kwargs
-        attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
+        initial_attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in initial_attributes.items())
         attributes.update({'service': self.SERVICE})
         _, _, cost_center = self.http_client.post("/costcenters", body=attributes)
         return cost_center

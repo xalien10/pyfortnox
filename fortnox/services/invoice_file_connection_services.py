@@ -71,8 +71,8 @@ class InvoiceFileConnectionService(object):
         if not args and not kwargs:
             raise Exception('attributes for InvoiceFileConnection are missing')
 
-        attributes = args[0] if args else kwargs
-        attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
+        initial_attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in initial_attributes.items())
         attributes.update({'service': self.SERVICE})
         _, _, customer = self.http_client.post("/<specific-service-path>", body=attributes)
         return customer
