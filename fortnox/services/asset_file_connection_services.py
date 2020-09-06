@@ -70,8 +70,8 @@ class AssetFileConnectionService(object):
         if not args and not kwargs:
             raise Exception('attributes for Asset File Connection are missing')
 
-        attributes = args[0] if args else kwargs
-        attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
+        initial_attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in initial_attributes.items())
         attributes.update({'service': self.SERVICE})
         _, _, asset_file_connection = self.http_client.post("/assetfileconnections", body=attributes)
         return asset_file_connection

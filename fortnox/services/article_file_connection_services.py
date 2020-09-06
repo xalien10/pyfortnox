@@ -50,7 +50,8 @@ class ArticleFileConnectionsService(object):
         :return: Dictionary that support attriubte-style access and represent ArticleFileConnections resource.
         :rtype: dict
         """
-        _, _, article_file_connection = self.http_client.get("/articlefileconnections/{file_id}".format(file_id=file_id))
+        _, _, article_file_connection = self.http_client.get(
+            "/articlefileconnections/{file_id}".format(file_id=file_id))
         return article_file_connection
 
     def create(self, *args, **kwargs):
@@ -70,8 +71,8 @@ class ArticleFileConnectionsService(object):
         if not args and not kwargs:
             raise Exception('attributes for ArticleFileConnections are missing')
 
-        attributes = args[0] if args else kwargs
-        attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
+        initial_attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in initial_attributes.items())
         attributes.update({'service': self.SERVICE})
         _, _, article_file_connection = self.http_client.post("/articlefileconnections", body=attributes)
         return article_file_connection
