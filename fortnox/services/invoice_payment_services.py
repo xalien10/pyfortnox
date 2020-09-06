@@ -70,8 +70,8 @@ class InvoicePaymentService(object):
         if not args and not kwargs:
             raise Exception('attributes for InvoicePayment are missing')
 
-        attributes = args[0] if args else kwargs
-        attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
+        initial_attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in initial_attributes.items())
         attributes.update({'service': self.SERVICE})
         _, _, invoice_payment = self.http_client.post("/invoicepayments", body=attributes)
         return invoice_payment

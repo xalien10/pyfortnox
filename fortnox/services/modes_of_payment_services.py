@@ -70,8 +70,8 @@ class ModesOfPaymentService(object):
         if not args and not kwargs:
             raise Exception('attributes for ModesOfPayment are missing')
 
-        attributes = args[0] if args else kwargs
-        attributes = dict((k, v) for k, v in attributes.items() if k in self.OPTS_KEYS_TO_PERSIST)
+        initial_attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in initial_attributes.items())
         attributes.update({'service': self.SERVICE})
         _, _, modes_of_payment = self.http_client.post("/modesofpayments", body=attributes)
         return modes_of_payment
