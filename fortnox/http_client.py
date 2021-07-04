@@ -149,7 +149,7 @@ class HttpClient(object):
 
         raw = bool(kwargs['raw']) if 'raw' in kwargs else False
 
-        if body is not None:
+        if body:
             # payload = body if raw else self.wrap_envelope(body)
             if 'file' in body:
                 # if endpoint contains file
@@ -175,7 +175,8 @@ class HttpClient(object):
         if not (200 <= resp.status_code < 300):
             self.handle_error_response(resp)
 
-        if 'Content-Type' in resp.headers and 'json' in resp.headers['Content-Type']:
+        response_headers = resp.headers
+        if response_headers.get('Content-Type', None) and 'json' in response_headers.get('Content-Type', None):
             resp_body = munchify(resp.json()) if raw else self.unwrap_envelope(resp.json())
         else:
             resp_body = resp.content
@@ -210,7 +211,7 @@ class HttpClient(object):
 
     @staticmethod
     def unwrap_envelope(body):
-        if body is '' or body is None:
+        if not body or body == '':
             # Sometimes response body returns nothing from Fortnox API
             return True
         keys = [key for key in body.keys()]
