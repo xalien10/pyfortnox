@@ -171,7 +171,6 @@ class HttpClient(object):
                                 headers=headers,
                                 timeout=float(self.config.timeout),
                                 )
-
         if not (200 <= resp.status_code < 300):
             self.handle_error_response(resp)
 
