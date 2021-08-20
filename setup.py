@@ -1,7 +1,15 @@
+import pkg_resources
 import setuptools
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
+
+with open('requirements.txt', 'r') as requirement:
+    install_requires = [
+        str(requirement)
+        for requirement
+        in pkg_resources.parse_requirements(requirement)
+    ]
 
 setuptools.setup(
     name="pyfortnox",
@@ -12,11 +20,15 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/xalien10/pyfortnox",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(
+        exclude=[
+            'tests', 'tests.*',
+        ]
+    ),
     include_package_data=True,
-    install_requires=["munch>=2.5.0", "requests>=2.21.0", "urllib3>=1.24.3", "requests-toolbelt>= 0.9.1",
-                      "pytest>=6.2.2"],
+    install_requires=install_requires,
     zip_safe=False,
+    platforms='any',
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

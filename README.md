@@ -245,19 +245,24 @@ https://developer.fortnox.se/documentation/
 
 Tests
 -----
+First you need to set these environment variables:
+
+    $ export FORTNOX_ACCESS_TOKEN='YOUR-FORTNOX-ACCESS-TOKEN'
+    $ export FORTNOX_CLIENT_SECRET='YOUR-FORTNOX-CLIENT-SECRET'
+
 
 To run all test suites:
 
-    $ python setup.py test
+    $ pytest tests
 
 And to run a single suite:
 
-    $ python setup.py test -s fortnox.test.test_associated_project_service.ProjectServiceTests
+    $ pytest tests/services/employee_services
 
 Thanks
 ------
 
-I would like to give huge thanks to my wife, fellow colleagues, mentors and friends for
+I would like to give huge thanks to my wife, colleagues, mentors and friends for
 their continuous inspiration and supports to contribute to this package.
 ``pyfortnox`` was named from ``pythonic fortnox`` and I was lucky to publish wrapper under **pyfortnox** name.
 
