@@ -14,7 +14,8 @@ setuptools.setup(
     url="https://github.com/xalien10/pyfortnox",
     packages=setuptools.find_packages(),
     include_package_data=True,
-    install_requires=["munch>=2.5.0", "requests>=2.21.0", "urllib3>=1.24.3", "requests-toolbelt>= 0.9.1"],
+    install_requires=["munch>=2.5.0", "requests>=2.21.0", "urllib3>=1.24.3", "requests-toolbelt>= 0.9.1",
+                      "pytest>=6.2.2"],
     zip_safe=False,
     classifiers=[
         "Programming Language :: Python :: 3",
