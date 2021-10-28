@@ -1,3 +1,5 @@
+from .helpers import collect_all_items_from_paginators
+
 class AccountsService(object):
     """
     :class:`fortnox.AccountsService` is used by :class:`fortnox.Client` to make
@@ -34,8 +36,11 @@ class AccountsService(object):
         :return: List of dictionaries that support attriubte-style access, which represent collection of Customers.
         :rtype: list
         """
-
-        _, _, accounts = self.http_client.get("/accounts", params=params)
+        url = '/accounts'
+        if 'page' not in params:
+            accounts = collect_all_items_from_paginators(self, params, url, 'Accounts')
+        else:
+            _, _, accounts = self.http_client.get(url, params=params)
         return accounts
 
     def retrieve(self, id):
