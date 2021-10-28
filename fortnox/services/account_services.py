@@ -43,7 +43,7 @@ class AccountsService(object):
             _, _, accounts = self.http_client.get(url, params=params)
         return accounts
 
-    def retrieve(self, id):
+    def retrieve(self, id, **params):
         """
         Retrieve a single Accounts
 
@@ -51,11 +51,13 @@ class AccountsService(object):
         If the specified Account does not exist, this query returns an error
 
         :calls: ``get /accounts/{id}``
-        :param int id: Unique identifier of a Account.
+        :param int id: Unique identifier of an Account.
+        :param dict params: (optional) Search options.
         :return: Dictionary that support attriubte-style access and represent Accounts resource.
         :rtype: dict
         """
-        _, _, account = self.http_client.get("/accounts/{id}".format(id=id))
+        url = f'/accounts/{id}'
+        _, _, account = self.http_client.get(url, params=params)
         return account
 
     def create(self, *args, **kwargs):
